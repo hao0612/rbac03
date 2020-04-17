@@ -35,7 +35,10 @@
     </filter>
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
-        <servlet-name>dispatcherServlet</servlet-name>
+       <!-- <servlet-name>dispatcherServlet</servlet-name>-->
+        <!--/*可以拦截所有资源,包括静态资源,可以更好的对静态资源进行权限判断
+        因为有有时某些静态资源是需要登录或者有权限才能访问-->
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
 
