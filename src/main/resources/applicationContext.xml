@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 配置数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 配置事务注解解析器 -->
+    <!--<tx:annotation-driven/>-->
+
+    <tx:advice id="txAdvice">
+        <tx:attributes>
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="list*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+    <aop:config>
+        <!--配置 WHERE-->
+        <aop:pointcut expression="execution(* cn.wolfcode.service.impl.*ServiceImpl.*(..))"
+                      id="txPointcut"/>
+        <!-- 关联 WHERE 与增强-->
+        <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
+    </aop:config>
+    <!-- 配置增强 WHEN WHAT
+        这个 WHEN 看 不出来
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="select*" read-only="true" />
+            <tx:method name="query*" read-only="true" />
+            <tx:method name="count*" read-only="true" />
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="list*" read-only="true" />
+            <tx:method name="find*" read-only="true" />
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+     -->
+    <!-- 配置AOP
+    <aop:config>
+         配置 WHERE
+        <aop:pointcut expression="execution(* cn.wolfcode.service.impl.*ServiceImpl.*(..))"
+            id="txPointcut"/>
+        关联 WHERE 与增强
+        <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice"/>
+    </aop:config>
+    -->
+    <!--
+        只要切入点切到方法, 在方法执行之前调用 transactionManager的对象开启事务的方法
+        只要切入点切到方法, 在方法执行正常执行完调用 transactionManager的对象提交事务的方法
+        只要切入点切到方法, 在方法执行抛出异常调用 transactionManager的对象回滚事务的方法
+     -->
+
+
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- 配置数据源对象 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driverClassName}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!-- 配置 SqlSessionFactory 对象
+        借由 SqlSessionFactoryBean 工厂类对象帮我们创建 SqlSessionFactory 对象
+     -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 配置数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 配置别名
+            若不想用别名,这样可以不用配置
+         -->
+        <!--	<property name="typeAliasesPackage" value="cn.wolfcode.domain"/>-->
+        <!-- 配置关联Mapper XML 后面可以不配置
+        <property name="" value=""/>
+        -->
+    </bean>
+
+    <!-- 配置 AccountMapper 接口的实现类对象
+        工厂类MapperFactoryBean
+        通过 工厂类的对象,创AccountMapper 接口实现类对象
+
+        按照名称sqlSessionFactory 从容器中获取对应对象
+        容器对象..getBean("sqlSessionFactory", SqlSessionFactory.class)
+            .openSession().getMapper(Class.forName("cn.wolfcode.mapper.AccountMapper"))
+
+         <bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+            <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+            <property name="mapperInterface" value="cn.wolfcode.mapper.AccountMapper"/>
+        </bean>
+     -->
+
+    <!-- 提供另外一种配置方式简化, 虽然也是 XML 配置
+        就是不管有多少个Mapper接口的实现类对象要配置, 一段配置搞定
+
+        根据类型去容器获取 SqlSessionFactory 的对象  赋值给 sqf
+        根据basePackage 包路径获取这个包所有字节码对象  赋值给 Class[] clzzs
+        for(Class clzz : clzzs){
+             sqf.openSession().getMapper(clzz)返回接口的实现对象, 帮你存在容器中
+        }
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.wolfcode.mapper"/>
+    </bean>
+
+
+    <!-- 配置 AccountServiceImpl 对象
+    <bean id="accountService" class="cn.wolfcode.service.impl.AccountServiceImpl">
+        前面是属性名, 后面是容器中另外一个bean id 值
+        <property name="accountMapper" ref="accountMapper"/>
+    </bean>
+     -->
+
+    <!-- IoC DI 注解解析器
+        让 Spring 帮我们创建业务实现类对象, 并设置属性值
+    -->
+    <context:component-scan base-package="cn.wolfcode.service.impl"/>
+
+</beans>

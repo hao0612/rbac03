@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="lazyLoadTriggerMethods" value="clone"/>
+    </settings>
+    <!--分页拦截器-->
+    <plugins>
+        <!-- com.github.pagehelper 为 PageHelper 类所在包名 -->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!-- 当 pageNum（当前页） <= 0 时，将 pageNum 设置为 1 -->
+            <!-- 当 pageNum > pages(总页数) 时，将 pageNum 设置为 pages -->
+            <property name="reasonable" value="true"/>
+        </plugin>
+    </plugins>
+</configuration>
