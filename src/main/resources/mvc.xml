@@ -32,18 +32,20 @@
     </bean>
     <!--引入applicationContext.xml-->
     <import resource="classpath:applicationContext.xml"/>
+    <!--引入shiro.xml-->
+    <import resource="classpath:shiro.xml"/>
     <!--注册拦截器-->
-    <mvc:interceptors>
+   <!-- <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/><!--拦截所有路径-->
-            <mvc:exclude-mapping path="/login.do"/><!--需要排除的路径-->
-            <bean class="cn.wolfcode.web.interceptor.LoginInterceptor"/><!--拦截处理器的路径-->
+            <mvc:mapping path="/**"/>&lt;!&ndash;拦截所有路径&ndash;&gt;
+            <mvc:exclude-mapping path="/login.do"/>&lt;!&ndash;需要排除的路径&ndash;&gt;
+            <bean class="cn.wolfcode.web.interceptor.LoginInterceptor"/>&lt;!&ndash;拦截处理器的路径&ndash;&gt;
         </mvc:interceptor>
         <mvc:interceptor>
-            <mvc:mapping path="/**"/><!--拦截所有路径-->
-            <mvc:exclude-mapping path="/login.do"/><!--需要排除的路径-->
-            <bean class="cn.wolfcode.web.interceptor.PermissionInterceptor"/><!--拦截处理器的路径-->
+            <mvc:mapping path="/**"/>&lt;!&ndash;拦截所有路径&ndash;&gt;
+            <mvc:exclude-mapping path="/login.do"/>&lt;!&ndash;需要排除的路径&ndash;&gt;
+            <bean class="cn.wolfcode.web.interceptor.PermissionInterceptor"/>&lt;!&ndash;拦截处理器的路径&ndash;&gt;
         </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
 
 </beans>

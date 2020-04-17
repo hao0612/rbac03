@@ -1,14 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="rbac02:war">
+  <artifact type="war" name="crm03:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <properties id="maven-jee-properties">
       <options>
-        <module>rbac02</module>
+        <module>crm03</module>
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="rbac03-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="rbac02:war exploded" />
+    <root id="archive" name="crm03-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="crm03:war exploded" />
     </root>
   </artifact>
 </component>

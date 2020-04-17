@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="rbac02" />
+        <module name="crm03" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="rbac02" target="1.8" />
+      <module name="crm03" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

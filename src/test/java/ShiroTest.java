@@ -17,7 +17,7 @@ public class ShiroTest {
         Subject subject = SecurityUtils.getSubject();//无论有没有登录都可以拿到对象
         System.out.println("认证状态"+subject.isAuthenticated());
         //创建登录的令牌
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken("zhangsan", "5155");
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken("admin", "1");
 
 
         //执行登录
