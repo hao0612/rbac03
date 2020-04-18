@@ -36,9 +36,11 @@
                 <!--高级查询--->
                 <form class="form-inline" id="searchForm" action="/permission/list.do" method="post">
                     <input type="hidden" name="currentPage" id="currentPage" value="1">
+                    <@shiro.hasRole name="Admin">
                     <a href="javascript:;" class="btn btn-success btn_reload c" style="margin: 10px;">
                         <span class="glyphicon glyphicon-repeat"></span> 重新加载
                     </a>
+                    </@shiro.hasRole>
                 </form>
 
                 <table class="table table-striped table-hover">
@@ -47,7 +49,9 @@
                         <th>编号</th>
                         <th>权限名称</th>
                         <th>权限表达式</th>
+                        <@shiro.hasRole name="Admin">
                         <th>操作</th>
+                        </@shiro.hasRole>
                     </tr>
                     </thead>
 
@@ -57,10 +61,12 @@
                             <td>${permission.name}</td>
                             <td>${permission.expression}</td>
                             <td>
+                              <@shiro.hasRole name="Admin">
                                 <a href="/permission/delete.do?id=${permission.id}"
                                    class="btn btn-danger btn-xs btn_delete">
                                     <span class="glyphicon glyphicon-trash"></span> 删除
                                 </a>
+                                </@shiro.hasRole>
                             </td>
                         </tr>
 

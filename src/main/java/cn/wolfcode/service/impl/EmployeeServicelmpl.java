@@ -6,6 +6,7 @@ import cn.wolfcode.qo.QueryObject;
 import cn.wolfcode.service.IEmployeeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class EmployeeServicelmpl implements IEmployeeService {
 
     @Override
     public void save(Employee employee, Long[] ids) {
+        //密码加密,使用用户名作为加密的“盐”
+        employee.setPassword(
+                new Md5Hash(employee.getPassword(),employee.getName()).toString());
         employeeMapper.insert(employee);
         //处理中间表
         if (ids != null && ids.length > 0) {
@@ -39,8 +43,12 @@ public class EmployeeServicelmpl implements IEmployeeService {
 
     }
 
+
+
     @Override
     public void update(Employee employee, Long[] ids) {
+
+
         employeeMapper.updateByPrimaryKey(employee);
         //删除关联关系
         employeeMapper.deleteRelation(employee.getId());

@@ -69,9 +69,11 @@
                 <!--高级查询--->
                 <form class="form-inline" id="searchForm" action="/department/list.do" method="post">
                     <input type="hidden" name="currentPage" id="currentPage" value="1">
+                    <@shiro.hasPermission name="department:input">
                     <a href="#" class="btn btn-success btn-input" style="margin: 10px">
                         <span class="glyphicon glyphicon-plus"></span> 添加
                     </a>
+                    </@shiro.hasPermission>
                 </form>
                 <!--编写内容-->
                 <div class="box-body table-responsive no-padding ">
@@ -89,12 +91,16 @@
                                 <td>${department.name}</td>
                                 <td>${department.sn}</td>
                                 <td>
-                                    <a href="#" class="btn btn-info btn-xs btn-input" data-json='${department.json}'>
-                                        <span class="glyphicon glyphicon-pencil"></span> 编辑
-                                    </a>
-                                    <a href="#" class="btn btn-danger btn-xs btn-delete" data-id='${department.id}'>
-                                        <span class="glyphicon glyphicon-trash"></span> 删除
-                                    </a>
+                                     <@shiro.hasPermission name="department:saveOrUpdata">
+                                        <a href="#" class="btn btn-info btn-xs btn-input" data-json='${department.json}'>
+                                            <span class="glyphicon glyphicon-pencil"></span> 编辑
+                                        </a>
+                                        </@shiro.hasPermission>
+                                       <@shiro.hasPermission name="department:delect">
+                                        <a href="#" class="btn btn-danger btn-xs btn-delete" data-id='${department.id}'>
+                                            <span class="glyphicon glyphicon-trash"></span> 删除
+                                        </a>
+                                      </@shiro.hasPermission>
                                 </td>
                             </tr>
                         </#list>

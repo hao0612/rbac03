@@ -19,10 +19,18 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li name="department"><a href="/department/list.do"><i class="fa fa-circle-o"></i> 部门管理</a></li>
-                    <li name="employee"><a href="/employee/list.do"><i class="fa fa-circle-o"></i> 员工管理</a></li>
-                    <li name="permission"><a href="/permission/list.do"><i class="fa fa-circle-o"></i> 权限管理</a></li>
-                    <li name="role"><a href="/role/list.do"><i class="fa fa-circle-o"></i> 角色管理</a></li>
+                    <@shiro.hasPermission name="department:list">
+                        <li name="department"><a href="/department/list.do"><i class="fa fa-circle-o"></i> 部门管理</a></li>
+                    <@shiro.hasPermission name="employee:list">
+                    </@shiro.hasPermission>
+                        <li name="employee"><a href="/employee/list.do"><i class="fa fa-circle-o"></i> 员工管理</a></li>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name=" permission:list">
+                         <li name="permission"><a href="/permission/list.do"><i class="fa fa-circle-o"></i> 权限管理</a></li>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="role:list">
+                         <li name="role"><a href="/role/list.do"><i class="fa fa-circle-o"></i> 角色管理</a></li>
+                    </@shiro.hasPermission>
                 </ul>
             </li>
             <li class="treeview">

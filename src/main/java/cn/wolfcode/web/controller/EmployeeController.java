@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,8 @@ public class EmployeeController {
     @RequiresPermissions(value = {"employee:input", "员工插入"}, logical = Logical.OR)
     @RequestMapping("/input")
     public String input(Long id, Model model) {
+        //密码加密,使用用户名作为加密的“盐”
+
         // 查询所有角色数据
         List<Role> roles = roleService.listAll();
         model.addAttribute("roles", roles);
@@ -73,6 +76,7 @@ public class EmployeeController {
         }
         return "/employee/input";
     }
+
     @RequiresPermissions(value = {"employee:saveOrUpdate", "员工增加/编辑页面"}, logical = Logical.OR)
     @RequestMapping("/saveOrUpdate")
     @ResponseBody

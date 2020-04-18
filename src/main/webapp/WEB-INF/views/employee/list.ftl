@@ -78,12 +78,18 @@
                         <button id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>
                             查询
                         </button>
+
+                        <@shiro.hasPermission name="employee:delete">
                         <a href="/employee/input.do" class="btn btn-success btn_redirect">
                             <span class="glyphicon glyphicon-plus"></span> 添加
                         </a>
+                        </@shiro.hasPermission>
+
+                        <@shiro.hasRole name="Admin">
                         <a href="#" class="btn btn-danger btn-batchDelete">
                             <span class="glyphicon glyphicon-trash">批量删除</span>
                         </a>
+                        </@shiro.hasRole>
                     </form>
                 </div>
                 <table class="table table-hover table-bordered">

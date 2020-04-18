@@ -54,7 +54,7 @@ public class CRMExceptionHandler {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().print(JSON.toJSONString(json));
             return null;
-        } else {//如果不是,则返回错误视图
+        } else {//如果不是,则返回没有权限的视图页面
             return "/common/nopermission";
         }
 

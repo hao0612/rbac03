@@ -43,17 +43,6 @@ public class DepartmentController {
         return new JsonResult();
 
     }
-
-    /* @RequestedPermission("部门添加页面")
-     @RequestMapping("/input")
-     public String input(Long id, Model model) {
-         if (id != null) {
-             //把修改的部门数据查询出来
-             Department department = departmentService.get(id);
-             model.addAttribute("department", department);
-         }
-         return "/department/input";
-     }*/
    // @RequestedPermission("部门新增/编辑页面")
     @RequiresPermissions(value = {"department:saveOrUpdate","部门新增/编辑页面"},logical=Logical.OR)
     @RequestMapping("/saveOrUpdate")

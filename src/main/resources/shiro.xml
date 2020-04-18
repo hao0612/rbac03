@@ -29,9 +29,27 @@
     <!--shiro安全管理器-->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="crmRealm"/>
+        <property name="cacheManager" ref="cacheManager"/>
     </bean>
    <!--开启Shiro注解扫描器-->
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
+    <!--指定当前需要使用的凭证匹配器-->
+
+    <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+       <!-- &lt;!&ndash;指定加密算法&ndash;&gt;-->
+        <property name="hashAlgorithmName" value="MD5"/>
+    </bean>
+    <!-- 缓存管理器 -->
+
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!-- 设置配置文件 -->
+        <property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
+
+    </bean>
+
+
+
+
 </beans>
