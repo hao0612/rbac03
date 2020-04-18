@@ -29,6 +29,6 @@ public interface EmployeeMapper {
 
     Employee selectByusernameAndPassword(@Param("username") String username, @Param("password") String password);
 
-    void batchDelect(Long[] ids);
+    void batchDelete(Long[] ids);
     Employee selectByName(String principal);
 }

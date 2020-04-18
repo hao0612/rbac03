@@ -7,6 +7,7 @@ import cn.wolfcode.service.IPermissionService;
 import cn.wolfcode.util.RequestedPermission;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -56,28 +57,21 @@ public class PermissionServicelmpl implements IPermissionService {
         Map<String, Object> beans = ctx.getBeansWithAnnotation(Controller.class);
         for (Object controller : beans.values()) {
             //获取controller字节码对象
-            Class<?> clazz = controller.getClass();
+            Class<?> clazz = controller.getClass().getSuperclass();
             //获取每个controller中的方法
             Method[] methods = clazz.getDeclaredMethods();
             for (Method method : methods) {
                 //判断方法上面是否有贴权限注解
-                RequestedPermission annotation = method.getAnnotation(RequestedPermission.class);
+                RequiresPermissions annotation = method.getAnnotation(RequiresPermissions.class);
                 if (annotation != null) {
                     //如果有.就需要处理
                     //方式一
-                    //String expression = annotation.expression();//权限表达式
-                    //方式二
+                    String expression = annotation.value() [0];//权限表达式
 
-                    String simpleName = clazz.getSimpleName();//DepartmentController
-                    simpleName = simpleName.replace("Controller", "");//Department
-                    //uncapitalize方法可以把首字母变为小写
-                    simpleName = StringUtils.uncapitalize(simpleName);//department
-                    String methodName = method.getName();
-                    String expression = simpleName + ":" + methodName;
                     //拿到权限注解中的属性,封装成权限对象
                     //判断表达式是否已经存在数据库.如果不存在才插入
                     if (!expressions.contains(expression)) {
-                        String name = annotation.value();//权限名称
+                        String name = annotation.value()[1];//权限名称
                         Permission permission = new Permission();
                         permission.setName(name);
                         permission.setExpression(expression);

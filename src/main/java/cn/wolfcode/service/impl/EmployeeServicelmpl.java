@@ -82,8 +82,8 @@ public class EmployeeServicelmpl implements IEmployeeService {
     }
 
     @Override
-    public void batchDelect(Long[] ids) {
-        employeeMapper.batchDelect(ids);
+    public void batchDelete(Long[] ids) {
+        employeeMapper.batchDelete(ids);
     }
 
     @Override

@@ -4,6 +4,8 @@ import cn.wolfcode.qo.QueryObject;
 import cn.wolfcode.service.IPermissionService;
 import cn.wolfcode.util.JsonResult;
 import cn.wolfcode.util.RequestedPermission;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PermissionController {
     @Autowired
     private IPermissionService permissionService;
-
-    @RequestedPermission("权限页面")
+   // @RequestedPermission("权限页面")
+    @RequiresPermissions(value = {"permission:list","权限页面"},logical= Logical.OR)
     @RequestMapping("/list")
     public String list(Model model, @ModelAttribute("qo") QueryObject qo) {
         model.addAttribute("PageInfo", permissionService.query(qo));
         return "/permission/list";
     }
-
-    @RequestedPermission("权限删除")
+    @RequiresPermissions(value = {"permission:delete","权限删除"},logical= Logical.OR)
     @RequestMapping("/delete")
     public String list(Long id) {
         if (id != null) {
@@ -32,14 +33,10 @@ public class PermissionController {
         }
         return "redirect:/permission/list.do";
     }
-
     @RequestMapping("/reload")
     @ResponseBody//返回json
     public JsonResult reload() {
         permissionService.reload();//执行业务
         return new JsonResult(); //成功
-
     }
-
-
 }

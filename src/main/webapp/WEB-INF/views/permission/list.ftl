@@ -7,17 +7,17 @@
     <#include "../common/link.ftl">
     <script>
         $(function () {
-            $(".btn_reload").click(function () {
-                $.get('/permission/reload.do', function (data) {//jsonresult
-                    if (data.success()) {//加载成功
+            $(".c").click(function () {
+                $.get('/permission/reload.do', function (data) {
+                    console.log(data);
+                   // window.location.reload();
+                    if (data.success) {//加载成功
                         window.location.reload();//重新加载当前页面
                     } else {
                         alert(data.msg);//错误提示
                     }
                 })
-
             })
-
         })
     </script>
 </head>
@@ -36,7 +36,7 @@
                 <!--高级查询--->
                 <form class="form-inline" id="searchForm" action="/permission/list.do" method="post">
                     <input type="hidden" name="currentPage" id="currentPage" value="1">
-                    <a href="javascript:;" class="btn btn-success btn_reload" style="margin: 10px;">
+                    <a href="javascript:;" class="btn btn-success btn_reload c" style="margin: 10px;">
                         <span class="glyphicon glyphicon-repeat"></span> 重新加载
                     </a>
                 </form>

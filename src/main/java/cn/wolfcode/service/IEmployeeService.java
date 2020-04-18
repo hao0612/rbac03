@@ -23,7 +23,7 @@ public interface IEmployeeService {
 
     Employee login(String username, String password);
 
-    void batchDelect(Long[] ids);
+    void batchDelete(Long[] ids);
 
     Employee selectByName(String name);
 }

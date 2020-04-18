@@ -24,14 +24,12 @@
         from employee_role
         where employee_id = #{eid}
     </delete>
-    <delete id="batchDelect">
+    <delete id="batchDelete">
         delete
         from employee where id in
         <foreach collection="array" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
-
-
     </delete>
     <insert id="insert" parameterType="cn.wolfcode.domain.Employee" useGeneratedKeys="true" keyProperty="id">
         insert into employee (name, password, email,

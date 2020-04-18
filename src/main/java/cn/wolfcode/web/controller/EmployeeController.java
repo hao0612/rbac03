@@ -10,6 +10,8 @@ import cn.wolfcode.service.IRoleService;
 import cn.wolfcode.util.JsonResult;
 import cn.wolfcode.util.RequestedPermission;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,12 +31,11 @@ public class EmployeeController {
     private IEmployeeService employeeService;
     @Autowired
     private IDepartmentService departmentService;
-
     @Autowired
     private IRoleService roleService;
-
-    // @RequestedPermission(value = "员工页面", expression = "department:list")
-    @RequestedPermission("员工页面")
+    // @RequestedPermission(value = "员工页面", expression = "employee:list")
+    // @RequestedPermission("员工页面")
+    @RequiresPermissions(value = {"employee:list", "员工页面"}, logical = Logical.OR)
     @RequestMapping("/list")
     public String list(Model model, @ModelAttribute("qo") EmployeeQueryObject qo) {
         /*Subject subject = SecurityUtils.getSubject();
@@ -42,19 +43,13 @@ public class EmployeeController {
         System.out.println("判断用户是否有Manager角色" + subject.hasRole("ORDER_MGR"));
         System.out.println("判断用户是否有employee:list权限" + subject.isPermitted("employee:list"));
         System.out.println("判断用户是否有role:list权限" + subject.isPermitted("role:list"));*/
-
-
-
         model.addAttribute("PageInfo", employeeService.query(qo));
         //查询所有部门数据,存模型中
         List<Department> departments = departmentService.listAll();
         model.addAttribute("departments", departments);
         return "/employee/list";
     }
-
-    //  @RequestedPermission(value = "员工删除", expression = "department:delete")
-    @RequestedPermission("员工删除")
-
+    @RequiresPermissions(value = {"employee:delete", "员工删除"}, logical = Logical.OR)
     @RequestMapping("/delete")
     public String delete(Long id) {
         if (id != null) {
@@ -62,11 +57,7 @@ public class EmployeeController {
         }
         return "redirect:/employee/list.do";
     }
-
-
-    // @RequestedPermission(value = "员工插入", expression = "department:input")
-    @RequestedPermission("员工插入")
-
+    @RequiresPermissions(value = {"employee:input", "员工插入"}, logical = Logical.OR)
     @RequestMapping("/input")
     public String input(Long id, Model model) {
         // 查询所有角色数据
@@ -82,14 +73,10 @@ public class EmployeeController {
         }
         return "/employee/input";
     }
-
-    //   @RequestedPermission(value = "员工增加/编辑页面", expression = "department:saveOrUpdate")
-    @RequestedPermission("员工增加/编辑页面")
+    @RequiresPermissions(value = {"employee:saveOrUpdate", "员工增加/编辑页面"}, logical = Logical.OR)
     @RequestMapping("/saveOrUpdate")
     @ResponseBody
     public JsonResult saveOrUpdate(Employee employee, Long[] ids) {
-
-
         if (employee.getId() != null) {
             employeeService.update(employee, ids);
         } else {
@@ -98,19 +85,15 @@ public class EmployeeController {
         return new JsonResult();
 
     }
-
-
-    @RequestedPermission("员工批量删除")
-    @RequestMapping("/batchDelect")
+    @RequestMapping("/batchDelete")
+    @RequiresPermissions(value = {"employee:batchDelete", "员工批量删除"}, logical = Logical.OR)
     @ResponseBody
-    public JsonResult batchDelect(/*@RequestParam("ids[]"),*/Long[] ids) {
-
+    public JsonResult batchDelete(/*@RequestParam("ids[]"),*/Long[] ids) {
         if (ids != null && ids.length > 0) {
-            employeeService.batchDelect(ids);
+            employeeService.batchDelete(ids);
         }
         return new JsonResult();
     }
-
     //插件要求返回结果需要为键值对形式 key为valid  ，value为boolean类型
     //   valid : true    代表验证通过(该用户名不存在)
     // valid：false  代表验证不通过(用户名已经存在)
@@ -134,8 +117,5 @@ public class EmployeeController {
         Employee employee = employeeService.selectByName(name);
         map.put("valid", employee == null);
         return map;
-
     }
-
-
 }
