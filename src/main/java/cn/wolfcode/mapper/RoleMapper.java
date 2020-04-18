@@ -23,4 +23,6 @@ public interface RoleMapper {
     void insertRelation(@Param("rid") Long rid, @Param("pid") Long pid);
 
     void deleteRelation(Long id);
+
+    List<String> selectSnByEmpId(Long id);
 }

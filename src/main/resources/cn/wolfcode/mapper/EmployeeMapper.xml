@@ -104,7 +104,7 @@
           and password = #{password}
     </select>
     <select id="selectByName" resultType="cn.wolfcode.domain.Employee">
-        select id, name
+        select id, name,password,admin
         from employee
         where name = #{name}
     </select>

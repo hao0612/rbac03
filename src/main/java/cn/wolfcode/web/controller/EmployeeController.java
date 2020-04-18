@@ -9,6 +9,8 @@ import cn.wolfcode.service.IEmployeeService;
 import cn.wolfcode.service.IRoleService;
 import cn.wolfcode.util.JsonResult;
 import cn.wolfcode.util.RequestedPermission;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +37,14 @@ public class EmployeeController {
     @RequestedPermission("员工页面")
     @RequestMapping("/list")
     public String list(Model model, @ModelAttribute("qo") EmployeeQueryObject qo) {
+        /*Subject subject = SecurityUtils.getSubject();
+        System.out.println("判断用户是否有hr角色" + subject.hasRole("HR_MGR"));
+        System.out.println("判断用户是否有Manager角色" + subject.hasRole("ORDER_MGR"));
+        System.out.println("判断用户是否有employee:list权限" + subject.isPermitted("employee:list"));
+        System.out.println("判断用户是否有role:list权限" + subject.isPermitted("role:list"));*/
+
+
+
         model.addAttribute("PageInfo", employeeService.query(qo));
         //查询所有部门数据,存模型中
         List<Department> departments = departmentService.listAll();

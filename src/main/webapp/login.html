@@ -27,7 +27,7 @@
                 //方式二
                 var params = $("#loginForm").serialize();
                 console.log(params);
-                $.post('/login.do' ,params, function(data) {
+                $.post('/login.html' ,params, function(data) {
                     if (data.success){//登陆成功
                         window.location.href = "/employee/list.do";
                     } else {

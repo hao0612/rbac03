@@ -6,6 +6,7 @@ import cn.wolfcode.service.IDepartmentService;
 import cn.wolfcode.util.JsonResult;
 import cn.wolfcode.util.RequestedPermission;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +21,9 @@ public class DepartmentController {
     @Autowired
     private IDepartmentService departmentService;
 
-    @RequestedPermission("部门页面")
+   // @RequestedPermission("部门页面")
     @RequestMapping("/list")
+    @RequiresPermissions("department:list")
     public String list(Model model, @ModelAttribute("qo") QueryObject qo) {
         PageInfo<Department> pageResult = departmentService.query(qo);
         model.addAttribute("PageInfo", pageResult);
