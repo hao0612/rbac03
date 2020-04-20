@@ -42,9 +42,9 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li name="systemDictionary"><a href="/systemDictionary/list.do"><i class="fa fa-circle-o"></i> 字典目录</a>
+                    <li name="systemDictionary"><a href="/SystemDictionary/list.do"><i class="fa fa-circle-o"></i> 字典目录</a>
                     </li>
-                    <li name="systemDictionaryItem"><a href="/systemDictionaryItem/list.do"><i
+                    <li name="systemDictionaryItem"><a href="/SystemDictionaryItem/list.do"><i
                                     class="fa fa-circle-o"></i> 字典明细</a></li>
                 </ul>
             </li>
