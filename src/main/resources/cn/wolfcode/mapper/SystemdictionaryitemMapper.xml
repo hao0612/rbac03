@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wolfcode.mapper.SystemdictionaryitemMapper" >
+  <resultMap id="BaseResultMap" type="cn.wolfcode.domain.Systemdictionaryitem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="parent_id" property="parent_id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from systemdictionaryitem
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.wolfcode.domain.Systemdictionaryitem" useGeneratedKeys="true" keyProperty="id" >
+    insert into systemdictionaryitem (parent_id, title, sequence
+      )
+    values (#{parent_id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.wolfcode.domain.Systemdictionaryitem" >
+    update systemdictionaryitem
+    set parent_id = #{parent_id,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, parent_id, title, sequence
+    from systemdictionaryitem
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, parent_id, title, sequence
+    from systemdictionaryitem
+  </select>
+</mapper>
