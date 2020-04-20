@@ -9,6 +9,10 @@ import cn.wolfcode.service.IEmployeeService;
 import cn.wolfcode.service.IRoleService;
 import cn.wolfcode.util.JsonResult;
 import cn.wolfcode.util.RequestedPermission;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.SpreadsheetVersion;
+import org.apache.poi.ss.formula.udf.UDFFinder;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -19,9 +23,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.html.parser.Entity;
+import javax.xml.soap.MimeHeaders;
+import javax.xml.ws.Response;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -121,5 +132,21 @@ public class EmployeeController {
         Employee employee = employeeService.selectByName(name);
         map.put("valid", employee == null);
         return map;
+    }
+    @RequestMapping("/exportXls")
+    public void exportXls(HttpServletResponse response) throws IOException {
+         //文件下载的响应头（让浏览器访问资源的的时候以下载的方式打开）
+        response.setHeader("Content-Disposition","attachment;filename=employee.xls");
+        //创建excel文件
+        Workbook wb = employeeService.exportXls();
+        //把excel的数据输出给浏览器
+        wb.write(response.getOutputStream());
+    }
+
+    @RequestMapping("/importXls")
+    @ResponseBody
+    public JsonResult importXls(MultipartFile file) throws Exception {
+        employeeService.importXls(file);
+        return new JsonResult();
     }
 }

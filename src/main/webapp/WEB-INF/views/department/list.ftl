@@ -110,7 +110,7 @@
                 </div>
             </div>
         </section>
-    </div>
+</div>
     <#include "../common/footer.ftl" >
 </div>
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
