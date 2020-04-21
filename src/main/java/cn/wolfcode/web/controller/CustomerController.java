@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.awt.image.Kernel;
+
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -42,6 +44,8 @@ public class CustomerController {
         }
             PageInfo<Customer> pageResult = customerService.query(qo);
             model.addAttribute("PageInfo", pageResult);
+            //查询销售人员的下拉框数据
+
         return "customer/potentialList";
     }
 

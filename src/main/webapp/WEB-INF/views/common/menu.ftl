@@ -58,8 +58,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li name="customer"><a href="/customer/list.do"><i class="fa fa-circle-o"></i> 客户列表</a></li>
-                    <li name="customer_potential"><a href="/customer/potentialList.do"><i class="fa fa-circle-o"></i>
+                    <li name="customer_potential"><a href="/customer/list.do"><i class="fa fa-circle-o"></i> 客户列表</a></li>
+                    <li name="customer"><a href="/customer/potentialList.do"><i class="fa fa-circle-o"></i>
                             潜在客户</a></li>
                     <li name="customer_pool"><a href="/customer/poolList.do"><i class="fa fa-circle-o"></i> 客户池</a></li>
                     <li name="customer_fail"><a href="/customer/failList.do"><i class="fa fa-circle-o"></i> 失败客户</a>

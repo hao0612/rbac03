@@ -56,10 +56,33 @@
                 <!--高级查询--->
                 <form class="form-inline" id="searchForm" action="/customer/potentialList.do" method="post">
                     <input type="hidden" name="currentPage" id="currentPage" value="1">
+
+                    <div class="form-group">
+                        <label for="keyword">关键字:</label>
+                        <input type="text" class="form-control" id="keyword" name="keyword" value="${(qo.keyword)!}"
+                               placeholder="请输入姓名/电话">
+                    </div>
+                    <div class="form-group">
+                        <@shiro.hasAnyRoles name="Admin,Market_Manager">
+                        <label for="dept">销售人员:</label>
+                        <select class="form-control" id="seller" name="sellerId">
+                            <option value="-1">全部</option>
+                            <#--<#list customer as d>
+                                <option value="${d.id}">${d.name}</option>
+                            </#list>-->
+                        </select>
+                        </@shiro.hasAnyRoles>
+                       <#-- <script>
+                         /*   $("#dept option[value='${qo.deptId}']").prop("selected", true);*/
+                        </script>-->
+                    </div>
+                    <button id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>
+                        查询
+                    </button>
                     <@shiro.hasPermission name="customer:input">
-                    <a href="#" class="btn btn-success btn-input" style="margin: 10px">
-                        <span class="glyphicon glyphicon-plus"></span> 添加
-                    </a>
+                        <a href="#" class="btn btn-success btn-input" style="margin: 10px">
+                            <span class="glyphicon glyphicon-plus"></span> 添加
+                        </a>
                     </@shiro.hasPermission>
                 </form>
                 <!--编写内容-->

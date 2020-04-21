@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.kerberos.KerberosKey;
 import java.util.List;
 
 @Service
@@ -47,7 +48,7 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public PageInfo<Customer> query(QueryObject qo) {
 //使用分页插件,传入当前页,每页显示数量
-        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize());
+        PageHelper.startPage(qo.getCurrentPage(), qo.getPageSize(),"input_time desc" );
         List<Customer> customers = customerMapper.selectForList(qo);//sql里面不需要写limt
 
         return new PageInfo<Customer>(customers);
