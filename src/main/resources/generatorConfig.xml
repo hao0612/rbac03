@@ -81,8 +81,8 @@
                 value=""/> -->
         </javaClientGenerator>
 
-        <table tableName="systemdictionaryitem" domainObjectName="SystemDictionaryItem">
-            <property name="useActualColumnNames" value="true"/>
+        <table tableName="customer" domainObjectName="Customer">
+            <property name="useActualColumnNames" value="false"/>
             <property name="constructorBased" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
