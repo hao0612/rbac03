@@ -92,6 +92,9 @@ and c.status = #{status}
 <if test="sellerId >-1">
 and c.seller_id = #{sellerId}
 </if>
+  <if test="keyword != null">
+    and (c.name like concat('%', #{keyword},'%') or c.tel like concat('%', #{keyword},'%'))
+  </if>
 </where>
     </select>
 

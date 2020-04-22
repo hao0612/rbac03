@@ -2,11 +2,12 @@ package cn.wolfcode.web.controller;
 
 
 import cn.wolfcode.domain.Customer;
-import cn.wolfcode.domain.Department;
 import cn.wolfcode.domain.Employee;
+import cn.wolfcode.domain.SystemDictionaryItem;
 import cn.wolfcode.qo.CustomerQuery;
 import cn.wolfcode.service.ICustomerService;
-import cn.wolfcode.qo.QueryObject;
+import cn.wolfcode.service.IEmployeeService;
+import cn.wolfcode.service.ISystemDictionaryItemService;
 import cn.wolfcode.util.JsonResult;
 import com.github.pagehelper.PageInfo;
 import org.apache.shiro.SecurityUtils;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.awt.image.Kernel;
+import java.util.List;
 
 @Controller
 @RequestMapping("/customer")
@@ -28,7 +29,10 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
-
+    @Autowired
+    private IEmployeeService employeeService;
+    @Autowired
+    private ISystemDictionaryItemService systemDictionaryItemService;
 
     @RequiresPermissions(value = {"customer:potentialList","潜在客户管理页面"},logical = Logical.OR)
     @RequestMapping("/potentialList")
@@ -44,8 +48,17 @@ public class CustomerController {
         }
             PageInfo<Customer> pageResult = customerService.query(qo);
             model.addAttribute("PageInfo", pageResult);
-            //查询销售人员的下拉框数据
-
+            //销售人员下拉框的数据,只显示带有经理或者销售员角色的员工
+            List<Employee> seller= employeeService.selectByRoleSn("Market_Manager","Market");
+            model.addAttribute("sellers", seller);
+        //职业下拉框数据
+        List<SystemDictionaryItem> jobs = systemDictionaryItemService.selectByDicSn("job");
+        model.addAttribute("jobs",jobs);
+        //来原下拉框数据
+        List<SystemDictionaryItem> source = systemDictionaryItemService.selectByDicSn("source");
+        model.addAttribute("source1",source);
+       /* List<SystemDictionaryItem> source = systemDictionaryItemService.selectByDicSn("source");
+        model.addAttribute("sources",source);*/
         return "customer/potentialList";
     }
 

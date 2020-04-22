@@ -67,14 +67,14 @@
                         <label for="dept">销售人员:</label>
                         <select class="form-control" id="seller" name="sellerId">
                             <option value="-1">全部</option>
-                            <#--<#list customer as d>
-                                <option value="${d.id}">${d.name}</option>
-                            </#list>-->
+                            <#list sellers as s>
+                                <option value="${s.id}">${s.name}</option>
+                            </#list>
                         </select>
+                            <script>
+                                $("#seller").val(${qo.sellerId})
+                            </script>
                         </@shiro.hasAnyRoles>
-                       <#-- <script>
-                         /*   $("#dept option[value='${qo.deptId}']").prop("selected", true);*/
-                        </script>-->
                     </div>
                     <button id="btn_query" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>
                         查询
@@ -131,41 +131,83 @@
 </div>
     <#include "../common/footer.ftl" >
 </div>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">新增/编辑</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title inputTitle">客户编辑</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" action="/customer/saveOrUpdate.do" method="post" id="editForm">
-                    <input type="hidden" name="id">
-                    <div class="form-group" style="margin-top: 10px;">
-                        <label for="name" class="col-sm-3 control-label">名称：</label>
+                    <input type="hidden" value="" name="id">
+                    <div class="form-group" >
+                        <label  class="col-sm-3 control-label">客户名称：</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="请输入部门名">
+                            <input type="text" class="form-control" name="name"
+                                   placeholder="请输入客户姓名"/>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-top: 10px;">
-                        <label for="sn" class="col-sm-3 control-label">编码：</label>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">客户年龄：</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="sn" name="sn"
-                                   placeholder="请输入部门编码">
+                            <input type="number" class="form-control" name="age"
+                                   placeholder="请输入客户年龄"/>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label  class="col-sm-3 control-label">客户性别：</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" name="gender">
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">客户电话：</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="tel"
+                                   placeholder="请输入客户电话"/>
+                        </div>
+                    </div>
+                    <div class="form-group" >
+                        <label  class="col-sm-3 control-label">客户QQ：</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" name="qq"
+                                   placeholder="请输入客户QQ"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">客户工作：</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" name="job.id">
+                              <#list jobs as j>
+                                    <option value="${j.id}">${j.title}</option>
+                                </#list>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">客户来源：</label>
+                        <div class="col-sm-6">
+                           <select class="form-control" name="source.id">
+                                 <#list source1 as s>
+                                        <option value="${s.id}">${s.title}</option>
+                                 </#list>
+                            </select>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary btn-submit">保存</button>
+                <button type="button" class="btn btn-primary btn-submit" >保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" >取消</button>
             </div>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -32,4 +32,6 @@ public interface IEmployeeService {
     Workbook exportXls();
 
     void importXls(MultipartFile file) throws Exception;
+
+    List<Employee> selectByRoleSn(String ... sns);
 }

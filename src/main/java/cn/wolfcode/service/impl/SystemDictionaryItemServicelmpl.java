@@ -54,4 +54,9 @@ public class SystemDictionaryItemServicelmpl implements ISystemDictionaryItemSer
 
         return new PageInfo<SystemDictionaryItem>(systemDictionaryItems);
     }
+
+    @Override
+    public List<SystemDictionaryItem> selectByDicSn(String sn) {
+        return systemDictionaryItemMapper.selectByDicSn(sn);
+    }
 }

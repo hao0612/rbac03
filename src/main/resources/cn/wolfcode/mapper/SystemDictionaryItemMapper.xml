@@ -42,4 +42,13 @@
       </if>
     </where>
   </select>
+  
+  
+  
+  <select id="selectByDicSn" resultMap="BaseResultMap">
+    select si.id , si.title,si.sequence from
+systemdictionary sd left join systemdictionaryitem si on sd.id = si.parent_id
+where sd.sn =#{sn} order by si.sequence
+
+  </select>
 </mapper>

@@ -17,4 +17,5 @@ public interface SystemDictionaryItemMapper {
     int updateByPrimaryKey(SystemDictionaryItem record);
 
     List<SystemDictionaryItem> selectForList(QueryObject qo);
+    List<SystemDictionaryItem> selectByDicSn(String sn);
 }

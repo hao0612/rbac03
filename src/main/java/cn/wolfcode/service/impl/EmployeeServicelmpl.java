@@ -167,5 +167,10 @@ public class EmployeeServicelmpl implements IEmployeeService {
 
     }
 
+    @Override
+    public List<Employee> selectByRoleSn(String ... sns) {
+        return employeeMapper.selectByRoleSn(sns);
+    }
+
 
 }
