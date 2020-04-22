@@ -2,15 +2,18 @@ package cn.wolfcode.service.impl;
 
 import cn.wolfcode.domain.Customer;
 import cn.wolfcode.domain.Department;
+import cn.wolfcode.domain.Employee;
 import cn.wolfcode.mapper.CustomerMapper;
 import cn.wolfcode.qo.QueryObject;
 import cn.wolfcode.service.ICustomerService;
+import cn.wolfcode.util.UserContext;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.kerberos.KerberosKey;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +25,13 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void save(Customer customer) {
+        //获取当前登录用户
+        Employee currentUser = UserContext.getCurrentUser();
+        //设置当前登录用户为录入人,销售员
+        customer.setInputUser(currentUser);
+        customer.setSeller(currentUser);
+        //设置录入时间
+        customer.setInputTime(new Date());
         customerMapper.insert(customer);
     }
 

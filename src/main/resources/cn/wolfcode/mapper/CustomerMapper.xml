@@ -30,12 +30,12 @@
   </delete>
   <insert id="insert" parameterType="cn.wolfcode.domain.Customer" useGeneratedKeys="true" keyProperty="id" >
     insert into customer (name, age, gender, 
-      tel, qq, job_id, source_id, 
-      seller_id, input_user_id, input_time, 
+      tel, qq, job_id, source_id,
+      seller_id, input_user_id, input_time,
       status)
     values (#{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{gender,jdbcType=INTEGER}, 
-      #{tel,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{job.id,jdbcType=BIGINT}, #{sourceId,jdbcType=BIGINT}, 
-      #{sellerId,jdbcType=BIGINT}, #{inputUser.id,jdbcType=BIGINT}, #{inputTime,jdbcType=TIMESTAMP}, 
+      #{tel,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{job.id,jdbcType=BIGINT}, #{source.id,jdbcType=BIGINT},
+      #{seller.id,jdbcType=BIGINT}, #{inputUser.id,jdbcType=BIGINT}, #{inputTime,jdbcType=TIMESTAMP},
       #{status,jdbcType=INTEGER})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.wolfcode.domain.Customer" >
@@ -46,11 +46,7 @@
       tel = #{tel,jdbcType=VARCHAR},
       qq = #{qq,jdbcType=VARCHAR},
       job_id = #{job.id,jdbcType=BIGINT},
-      source_id = #{source.id,jdbcType=BIGINT},
-      seller_id = #{seller.id,jdbcType=BIGINT},
-      input_user_id = #{inputUser.id,jdbcType=BIGINT},
-      input_time = #{inputTime,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
+      source_id = #{source.id,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

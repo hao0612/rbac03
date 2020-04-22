@@ -1,9 +1,11 @@
 package cn.wolfcode.domain;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * 客户
@@ -35,11 +37,31 @@ public class Customer {
     //销售人员
     private Employee seller;
     //录入人
-    private Employee inputuser;
+    private Employee inputUser;
     //录入时间
     private Date inputTime;
     //状态
     private Integer status = STATUS_COMMON;
+    //把部门转为json字符串
+    public String getJson() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("age", age);
+        map.put("gender", gender);
+        map.put("tel", tel);
+        map.put("qq", qq);
+        if (job != null){
+            map.put("jobId",job.getId() );
+        }
+       if (source != null){
+           map.put("sourceId", source.getId());
+       }
+        //不能直接传this进去,会出现死循环
+        return JSON.toJSONString(map);
+    }
+
+
     public String getStatusName() {
         switch (status) {
             case STATUS_NORMAL:

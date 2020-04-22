@@ -12,13 +12,20 @@
             $('.btn-input').click(function () {
 
                 //清除模态框的数据
-                $("#editForm input").val('');
+                $("#editForm input,#editForm select").val('');
+
                 //获取事件源绑定的数据 使用data方法可以很方便获取data-*开头的属性的数据
                 var json = $(this).data("json");
                 if (json) { //json有数据代表是编辑
-                    $("input[name=id]").val(json.id);
-                    $("input[name=name]").val(json.name);
-                    $("input[name=sn]").val(json.sn);
+                    $("#editForm input[name=id]").val(json.id);
+                    $("#editForm input[name=name]").val(json.name);
+                    $("#editForm input[name=age]").val(json.age);
+                    $("#editForm select[name=gender]").val(json.gender);
+                    $("#editForm input[name=tel]").val(json.tel);
+                    $("#editForm input[name=qq]").val(json.qq);
+                    //下拉框回显,只需要给value的值就可以了
+                    $("#editForm select[name='job.id']").val(json.jobId);
+                    $("#editForm select[name='source.id']").val(json.sourceId);
                 }
                 $('#editModal').modal('show');
             });
@@ -33,11 +40,63 @@
             });
 
             //提交
-            $('.btn-submit').click(function () {
+           $('.btn-submit').click(function () {
                 //提交异步表单
 
                 $("#editForm").ajaxSubmit(handlerMessage)
             })
+            /*    //表单数据验证
+             $("#editForm").bootstrapValidator({
+
+                    feedbackIcons: {//图标
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    }, fields: { //配置要验证的字段
+<#--  <#if !employee??>-->
+                 tel: {
+                        validators: { //验证的规则
+                            notEmpty: { //不能为空
+                                message: "手机号不能为空" //错误时的提示信息
+                            },
+                            regexp: {
+                                regexp: /^1\d{10}$/,
+                                message: '手机号格式错误'
+                            },
+                           remote: { //远程验证
+                                type: 'POST', //请求方式
+                                url: '/employee/checkName.do', //请求地址
+                                data: function () {  //自定义提交参数，默认只会提交当前用户名input的参数
+                                    return {
+                                        id: $('[name="id"]').val(),
+                                        name: $('[name="name"]').val()
+                                    };
+                                },
+                                message: '用户名已经存在', //验证不通过时的提示信息
+                                delay: 1000 //输入内容1秒后发请求
+                            },
+                        }
+                    }
+                }
+           }).on('success.form.bv', function (e) { //表单所有数据验证通过后执行里面的代码
+                //禁止原本的表单提交
+                e.preventDefault();
+                //设置右边的所有option为选中的状态
+                $(".selfRoles option").prop('selected', true);
+                //提交异步表单
+                $("#editForm").ajaxSubmit(function (data) {
+                    if (data.success) {
+                        $.messager.alert("温馨提示", '操作成功2秒后自动跳转');
+                        setTimeout(function () {
+                            window.location.href = "/employee/list.do";
+                        }, 1000)
+
+                    } else {
+                        $.messager.popup(data.msg);
+                    }
+                });*!/
+            });
+        });*/
         })
     </script>
 </head>
