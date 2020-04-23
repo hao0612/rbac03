@@ -19,3 +19,9 @@
 <script src="/js/plugins/bootstrap-validator/js/bootstrapValidator.min.js"></script>
 <!--中文语言库-->
 <script type="text/javascript" src="/js/plugins/bootstrap-validator/js/language/zh_CN.js"></script>
+<!--引入日期插件的样式文件-->
+<link rel="stylesheet" href="/js/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css"/>
+<!--引入日期插件的js文件-->
+<script type="text/javascript" src="/js/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<!--引入中文国际化文件-->
+<script type="text/javascript" src="/js/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min.js"></script>

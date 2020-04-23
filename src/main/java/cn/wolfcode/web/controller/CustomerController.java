@@ -59,6 +59,9 @@ public class CustomerController {
         model.addAttribute("source1",source);
        /* List<SystemDictionaryItem> source = systemDictionaryItemService.selectByDicSn("source");
         model.addAttribute("sources",source);*/
+        //交流方式下拉框数据
+        List<SystemDictionaryItem> ccts = systemDictionaryItemService.selectByDicSn("communicationMethod");
+        model.addAttribute("ccts",ccts);
         return "customer/potentialList";
     }
 

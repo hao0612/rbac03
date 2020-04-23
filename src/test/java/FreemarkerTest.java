@@ -19,8 +19,8 @@ public class FreemarkerTest {
         cfg.setDirectoryForTemplateLoading(new File("templates"));
         //-----------------要修改的数据----------------------------
         Map root = new HashMap();
-        String domainName = "Customer"; //domain类名
-        root.put("chinese","潜在客户管理"); //中文,用于shiro注解
+        String domainName = "CustomerTransfer"; //domain类名
+        root.put("chinese","客户移交历史"); //中文,用于shiro注解
         //---------------------------------------------
         root.put("capitalize",domainName); //大写开头
         root.put("uncapitalize", StringUtils.uncapitalize(domainName)); //小写开头

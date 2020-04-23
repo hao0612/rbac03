@@ -81,7 +81,7 @@
                 value=""/> -->
         </javaClientGenerator>
 
-        <table tableName="customer" domainObjectName="Customer">
+        <table tableName="customertransfer" domainObjectName="CustomerTransfer">
             <property name="useActualColumnNames" value="false"/>
             <property name="constructorBased" value="false"/>
             <generatedKey column="id" sqlStatement="JDBC"/>
