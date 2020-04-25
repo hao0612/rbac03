@@ -1,6 +1,8 @@
 package cn.wolfcode.mapper;
 
 import cn.wolfcode.domain.CustomerTransfer;
+import cn.wolfcode.qo.QueryObject;
+
 import java.util.List;
 
 public interface CustomerTransferMapper {
@@ -13,4 +15,6 @@ public interface CustomerTransferMapper {
     List<CustomerTransfer> selectAll();
 
     int updateByPrimaryKey(CustomerTransfer record);
+
+    List<CustomerTransfer> selectForList(QueryObject qo);
 }

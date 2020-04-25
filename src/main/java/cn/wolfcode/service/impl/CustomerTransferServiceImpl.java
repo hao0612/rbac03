@@ -1,14 +1,17 @@
 package cn.wolfcode.service.impl;
 
 import cn.wolfcode.domain.CustomerTransfer;
+import cn.wolfcode.mapper.CustomerMapper;
 import cn.wolfcode.mapper.CustomerTransferMapper;
 import cn.wolfcode.qo.QueryObject;
 import cn.wolfcode.service.ICustomerTransferService;
+import cn.wolfcode.util.UserContext;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,10 +19,19 @@ public class CustomerTransferServiceImpl implements ICustomerTransferService {
 
     @Autowired
     private CustomerTransferMapper customerTransferMapper;
-
+    @Autowired
+    private CustomerMapper customerMapper;
 
     @Override
     public void save(CustomerTransfer customerTransfer) {
+        //更新客户的销售人员
+        customerMapper.updateSeller(customerTransfer.getNewSeller().getId(),customerTransfer.
+                getCustomer().getId()
+        );
+        //设置操作人
+        customerTransfer.setOperator(UserContext.getCurrentUser());
+        //设置操作时间
+        customerTransfer.setOperateTime(new Date());
         customerTransferMapper.insert(customerTransfer);
     }
 

@@ -3,11 +3,7 @@
 <mapper namespace="cn.wolfcode.mapper.CustomerTransferMapper" >
   <resultMap id="BaseResultMap" type="cn.wolfcode.domain.CustomerTransfer" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="customer_id" property="customerId" jdbcType="BIGINT" />
-    <result column="operator_id" property="operatorId" jdbcType="BIGINT" />
     <result column="operate_time" property="operateTime" jdbcType="TIMESTAMP" />
-    <result column="old_seller_id" property="oldSellerId" jdbcType="BIGINT" />
-    <result column="new_seller_id" property="newSellerId" jdbcType="BIGINT" />
     <result column="reason" property="reason" jdbcType="VARCHAR" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -18,17 +14,17 @@
     insert into customertransfer (customer_id, operator_id, operate_time, 
       old_seller_id, new_seller_id, reason
       )
-    values (#{customerId,jdbcType=BIGINT}, #{operatorId,jdbcType=BIGINT}, #{operateTime,jdbcType=TIMESTAMP}, 
-      #{oldSellerId,jdbcType=BIGINT}, #{newSellerId,jdbcType=BIGINT}, #{reason,jdbcType=VARCHAR}
+    values (#{customer.id,jdbcType=BIGINT}, #{operator.id,jdbcType=BIGINT}, #{operateTime,jdbcType=TIMESTAMP}, 
+      #{oldSeller.id,jdbcType=BIGINT}, #{newSeller.id,jdbcType=BIGINT}, #{reason,jdbcType=VARCHAR}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.wolfcode.domain.CustomerTransfer" >
     update customertransfer
-    set customer_id = #{customerId,jdbcType=BIGINT},
-      operator_id = #{operatorId,jdbcType=BIGINT},
+    set customer_id = #{customer.id,jdbcType=BIGINT},
+      operator_id = #{operator.id,jdbcType=BIGINT},
       operate_time = #{operateTime,jdbcType=TIMESTAMP},
-      old_seller_id = #{oldSellerId,jdbcType=BIGINT},
-      new_seller_id = #{newSellerId,jdbcType=BIGINT},
+      old_seller_id = #{oldSeller.id,jdbcType=BIGINT},
+      new_seller_id = #{newSeller.id,jdbcType=BIGINT},
       reason = #{reason,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -43,4 +39,9 @@
     reason
     from customertransfer
   </select>
+    <select id="selectForList" resultType="cn.wolfcode.domain.CustomerTransfer">
+      select id, customer_id, operator_id, operate_time, old_seller_id, new_seller_id,
+             reason
+      from customertransfer
+    </select>
 </mapper>

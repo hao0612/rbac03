@@ -49,7 +49,10 @@
       source_id = #{source.id,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    <update id="updateSeller">
+        update customer set seller_id = #{sellerId} where id =#{customerId}
+    </update>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select id, name, age, gender, tel, qq, job_id, source_id, seller_id, input_user_id, 
     input_time, status
     from customer

@@ -63,61 +63,20 @@
                 autoclose: true, //选择日期后自动关闭
                 todayHighlight: true //高亮今日日期
             });
-            /*    //表单数据验证
-             $("#editForm").bootstrapValidator({
 
-                    feedbackIcons: {//图标
-                        valid: 'glyphicon glyphicon-ok',
-                        invalid: 'glyphicon glyphicon-remove',
-                        validating: 'glyphicon glyphicon-refresh'
-                    }, fields: { //配置要验证的字段
-<#--  <#if !employee??>-->
-                 tel: {
-                        validators: { //验证的规则
-                            notEmpty: { //不能为空
-                                message: "手机号不能为空" //错误时的提示信息
-                            },
-                            regexp: {
-                                regexp: /^1\d{10}$/,
-                                message: '手机号格式错误'
-                            },
-                           remote: { //远程验证
-                                type: 'POST', //请求方式
-                                url: '/employee/checkName.do', //请求地址
-                                data: function () {  //自定义提交参数，默认只会提交当前用户名input的参数
-                                    return {
-                                        id: $('[name="id"]').val(),
-                                        name: $('[name="name"]').val()
-                                    };
-                                },
-                                message: '用户名已经存在', //验证不通过时的提示信息
-                                delay: 1000 //输入内容1秒后发请求
-                            },
-                        }
-                    }
-                }
-           }).on('success.form.bv', function (e) { //表单所有数据验证通过后执行里面的代码
-                //禁止原本的表单提交
-                e.preventDefault();
-                //设置右边的所有option为选中的状态
-                $(".selfRoles option").prop('selected', true);
+            $(".btn-transfer").click(function () {
+                var json = $(this).data("json");
+                $("#transferForm input[name='customer.name']").val(json.name);
+                $("#transferForm input[name='customer.id']").val(json.id);
+
+                $("#transferForm input[name='oldSeller.name']").val(json.sellerName)
+                $("#transferForm input[name='oldSeller.id']").val(json.sellerId)
+                $("#transferModal").modal('show');
+            })
+            $('.transfer-submit').click(function () {
                 //提交异步表单
-                $("#editForm").ajaxSubmit(function (data) {
-                    if (data.success) {
-                        $.messager.alert("温馨提示", '操作成功2秒后自动跳转');
-                        setTimeout(function () {
-                            window.location.href = "/employee/list.do";
-                        }, 1000)
-
-                    } else {
-                        $.messager.popup(data.msg);
-                    }
-                });*!/
+                $("#transferForm").ajaxSubmit(handlerMessage)
             });
-        });*/
-
-
-
         })
     </script>
 </head>
@@ -201,7 +160,7 @@
                                     </a>
                                     <@shiro.hasAnyRoles name="Admin,Market_Manager">
                                         <a href="#"
-                                           class="btn btn-danger btn-xs btn-transfer">
+                                           class="btn btn-danger btn-xs btn-transfer" data-json='${customer.json}'>
                                             <span class="glyphicon glyphicon-phone"></span> 移交
                                         </a>
                                     </@shiro.hasAnyRoles>
@@ -220,7 +179,6 @@
 </div>
     <#include "../common/footer.ftl" >
 </div>
-
 <#--增加编辑模态框-->
 <div class="modal fade" id="editModal">
     <div class="modal-dialog">
@@ -391,7 +349,9 @@
                         <label for="sn" class="col-sm-4 control-label">新营销人员：</label>
                         <div class="col-sm-8">
                             <select name="newSeller.id" class="form-control">
-
+                                    <#list sellers as e>
+                                        <option value="${e.id}">${e.name}</option>
+                                    </#list>
                             </select>
                         </div>
                     </div>

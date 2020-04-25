@@ -1,75 +1,24 @@
 package cn.wolfcode.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Setter
+@Getter
 public class CustomerTransfer {
     private Long id;
-
-    private Long customerId;
-
-    private Long operatorId;
-
+    //客户
+    private Customer customer;
+    //操作人
+    private Employee operator;
+    //操作时间
     private Date operateTime;
-
-    private Long oldSellerId;
-
-    private Long newSellerId;
-
+    //旧销售人员
+    private Employee oldSeller;
+    //新销售人员
+    private Employee newSeller;
+    //移交原因
     private String reason;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public Long getOperatorId() {
-        return operatorId;
-    }
-
-    public void setOperatorId(Long operatorId) {
-        this.operatorId = operatorId;
-    }
-
-    public Date getOperateTime() {
-        return operateTime;
-    }
-
-    public void setOperateTime(Date operateTime) {
-        this.operateTime = operateTime;
-    }
-
-    public Long getOldSellerId() {
-        return oldSellerId;
-    }
-
-    public void setOldSellerId(Long oldSellerId) {
-        this.oldSellerId = oldSellerId;
-    }
-
-    public Long getNewSellerId() {
-        return newSellerId;
-    }
-
-    public void setNewSellerId(Long newSellerId) {
-        this.newSellerId = newSellerId;
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
 }

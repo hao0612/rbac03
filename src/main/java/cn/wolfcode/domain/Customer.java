@@ -57,6 +57,10 @@ public class Customer {
        if (source != null){
            map.put("sourceId", source.getId());
        }
+       if(seller != null){
+           map.put("sellerId",seller.getId());
+           map.put("sellerName",seller.getName());
+       }
         //不能直接传this进去,会出现死循环
         return JSON.toJSONString(map);
     }
